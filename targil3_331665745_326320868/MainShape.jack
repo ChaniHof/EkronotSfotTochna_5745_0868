@@ -1,0 +1,79 @@
+class MainShape {
+    function void main() {
+        var char choice;
+        var int key, totalActions;
+        var Apple myApple;
+        var Lamp myLamp;
+        var boolean exit;
+        var String shapeName;
+
+        let exit = false;
+        let totalActions = 0;
+
+        // 1. שלב הבחירה
+        do Output.printString("Choose a shape: A for Apple, L for Lamp");
+        while (choice = 0) {
+            let choice = Keyboard.keyPressed();
+        }
+        do Screen.clearScreen();
+
+        // 2. יצירת האובייקט הנבחר
+        if (choice = 65) { // 'A' במקלדת
+            let myApple = Apple.new(256, 128, 30);
+            let shapeName = "Apple";
+        }
+        if (choice = 76) { // 'L' במקלדת
+            let myLamp = Lamp.new(256, 128, 30);
+            let shapeName = "Lamp";
+        }
+
+        // 3. לולאת פעולות (חיצים להזזה, + ו- להגדלה/הקטנה, Q לסיום)
+        do Output.moveCursor(0, 0);
+        do Output.printString("Arrows: Move, +: Grow, -: Shrink, Q: Finish");
+
+        while (~exit) {
+            let key = Keyboard.keyPressed();
+            
+            if (key = 81) { let exit = true; } // 'Q' לסיום
+
+            if (choice = 65) { // פעולות על תפוח
+                if (key = 131) { do myApple.move(0, -2); } // למעלה
+                if (key = 133) { do myApple.move(0, 2); }  // למטה
+                if (key = 130) { do myApple.move(-2, 0); } // שמאלה
+                if (key = 132) { do myApple.move(2, 0); }  // ימינה
+                if (key = 43)  { do myApple.resize(2); }   // '+'
+                if (key = 45)  { do myApple.resize(-2); }  // '-'
+            }
+            
+            if (choice = 76) { // פעולות על מנורה
+                if (key = 131) { do myLamp.move(0, -2); }
+                if (key = 133) { do myLamp.move(0, 2); }
+                if (key = 130) { do myLamp.move(-2, 0); }
+                if (key = 132) { do myLamp.move(2, 0); }
+                if (key = 43)  { do myLamp.resize(2); }
+                if (key = 45)  { do myLamp.resize(-2); }
+            }
+            do Sys.wait(50); // השהייה קלה לשליטה חלקה
+        }
+
+        // 4. שלב הסיום והדפסת סיכום (סעיף 5 בהנחיות)
+        do Screen.clearScreen();
+        do Output.moveCursor(10, 15);
+        do Output.printString("Shape selected: ");
+        do Output.printString(shapeName);
+        
+        do Output.moveCursor(12, 15);
+        do Output.printString("Total actions performed: ");
+        
+        if (choice = 65) { let totalActions = myApple.getActionCount(); }
+        if (choice = 76) { let totalActions = myLamp.getActionCount(); }
+        
+        do Output.printInt(totalActions);
+
+        // שחרור זיכרון
+        if (choice = 65) { do myApple.dispose(); }
+        if (choice = 76) { do myLamp.dispose(); }
+
+        return;
+    }
+}
