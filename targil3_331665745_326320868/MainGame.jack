@@ -1,0 +1,10 @@
+class MainGame {
+    function void main() {
+        var ConnectFourGame game;
+        let game = ConnectFourGame.new();
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}
+
