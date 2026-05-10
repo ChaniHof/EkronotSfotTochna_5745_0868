@@ -1,0 +1,16 @@
+function Main.main 0
+call MainShape.main 0
+pop temp 0
+push constant 3000
+call Sys.wait 1
+pop temp 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+call MainGame.main 0
+pop temp 0
+push constant 0
+return

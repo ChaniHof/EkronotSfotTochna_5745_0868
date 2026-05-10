@@ -1,0 +1,14 @@
+class Main {
+    function void main() {
+        do MainShape.main();
+
+        do Sys.wait(3000);
+
+        // reset screen
+        do Screen.clearScreen(); // מנקה את הגרפיקה (הופך הכל ללבן)
+        do Output.moveCursor(0, 0); // מחזיר את סמן הכתיבה לפינה השמאלית העליונה
+
+        do MainGame.main();
+        return;
+    }
+}

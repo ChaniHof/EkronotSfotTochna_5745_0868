@@ -1,0 +1,56 @@
+class ConnectFourGame {
+    field Board board;
+    field int currentPlayer;
+    field boolean exit;
+
+    constructor ConnectFourGame new() {
+        let board = Board.new();
+        let currentPlayer = 1;
+        let exit = false;
+        return this;
+    }
+
+    method void dispose() {
+        do board.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run() {
+        var int key;
+        var boolean moved;
+
+        do Output.printString("Connect 4: Press 1-9 to Drop, ESC to Quit");
+        do board.draw();
+
+        while (~exit) {
+            let key = Keyboard.keyPressed();
+
+            if (key = 140) { let exit = true; } // ESC
+
+            if ((key > 48) & (key < 58)) { // מקשים 1-9
+                let moved = board.dropDisc(key - 49, currentPlayer);
+                
+                if (moved) {
+                    do board.draw(); // קריאה לציור הלוח כולו
+                    if (board.checkWin(currentPlayer)) {
+                        do showWinner();
+                        let exit = true;
+                    } else {
+                        let currentPlayer = 3 - currentPlayer;
+                    }
+                    do Sys.wait(300); // מניעת לחיצה כפולה
+                }
+            }
+        }
+        return;
+    }
+
+    method void showWinner() {
+        do Output.moveCursor(22, 0);
+        do Output.printString("Victory! Player ");
+        do Output.printInt(currentPlayer);
+        do Output.printString(" Wins!");
+        return;
+    }
+}
